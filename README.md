@@ -4,4 +4,4 @@ Most of the websites could be run with headless browser, while few of them have 
 
 There are also cases that scraping is not quite feasible, such as when the captcha is needed, or there are limitation to the number of pages to view or the number of images to download for each registered user account.
 
-JSON format is used to store the scraped website content. Please check the folder **json** for reference.
+The scraped website content would be stored in JSON format as well as image format. Please check the folder **json** for reference.
