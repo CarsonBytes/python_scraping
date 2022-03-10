@@ -1,4 +1,4 @@
-This is 1 of my previous projects that scrap website content with Python and Selenium ChromeDriver.
+This is 1 of my previous projects that scraps website content with Python and Selenium ChromeDriver.
 
 Most of the websites could be run with headless browser, while few of them have to be run with non-headless one due to ajax pagination and image loading, or enhanced security countermeasures deployed by the websites such as random waiting time and redirection to Cloudflare page.
 
