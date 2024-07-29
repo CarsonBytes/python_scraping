@@ -1,0 +1,11 @@
+# Ignore everything
+*
+
+# Except these files and folders
+!README.md
+!selenium3/
+!selenium3/*
+!selenium3/json/
+!selenium3/json/*
+!selenium4/bot.py
+!selenium4/maindemo.py
