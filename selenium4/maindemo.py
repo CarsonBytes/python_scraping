@@ -1,5 +1,5 @@
 import os
-from bot import DemoBot
+from botdemo import DemoBot
 from urllib.parse import urljoin
 
 # Get user input for the URL and code

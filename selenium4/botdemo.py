@@ -36,33 +36,22 @@ class DemoBot:
         self.driver = webdriver.Edge(options=self.options)
 
     def parse_url(self, url):
-        """
-        Extract topic and question numbers from the URL and format the designated filename.
-        """
-        # only urls about amazon doesn't contain topic and question numbers
-        if "amazon" in url:
-            # Get the title of the webpage (assume the url page is already loaded)
-            html_title = self.driver.title
+        id = ""
+        # Split the URL by the '/'
+        url_parts = url.split("/")
 
-            topic_number = re.search(r'topic (\d+)', html_title).group(1)
-            question_number = re.search(r'question (\d+)', html_title).group(1)
+        # Extract the last part of the URL
+        last_part = url_parts[-2]
 
-        else:
-            # Split the URL by the '/'
-            url_parts = url.split("/")
+        # Split the last part by '-'
+        parts = last_part.split("-")
 
-            # Extract the last part of the URL
-            last_part = url_parts[-2]
-
-            # Split the last part by '-'
-            parts = last_part.split("-")
-
-            topic_number = parts[-4]
-            question_number = parts[-2]
+        topic_number = parts[-4]
+        q_number = parts[-2]
 
         topic_number_formatted = f"{int(topic_number):02d}"
-        question_number_formatted = f"{int(question_number):03d}"
-        return f"{topic_number_formatted}.{question_number_formatted}.mhtml"
+        q_number_formatted = f"{int(q_number):03d}"
+        return f"{topic_number_formatted}.{q_number_formatted}{id}.mhtml"
 
     def get_total_pages(self, url):
         """
