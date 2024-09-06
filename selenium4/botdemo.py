@@ -75,7 +75,7 @@ class DemoBot:
         total_pages = int(options[-1].get_attribute("value"))
         return total_pages
 
-    def take_snapshot(self, url, code):
+    def process_page(self, url, code):
         """
         Take a snapshot of the given URL and save it as an MHTML file.
         """

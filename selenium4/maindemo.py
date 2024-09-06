@@ -37,7 +37,7 @@ while x < LAST_PAGE + 1:
     all_records = bot.find_all_records(urljoin(url, str(x)), code)
     for record in all_records:
         print(record)
-        bot.take_snapshot(record, code)
+        bot.process_page(record, code)
     x += 1
 
 bot.close()
