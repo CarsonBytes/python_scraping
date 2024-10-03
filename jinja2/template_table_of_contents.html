@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table of Contents</title>
+
+    <style>
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Full height for vertical centering */
+            background-color: #f4f4f4; /* Light background color */
+            overflow: hidden; /* Prevent body overflow */
+        }
+        .container {
+            max-width: 600px; /* Set a maximum width for the content */
+            text-align: center; /* Center align text */
+            background-color: #fff; /* White background for the container */
+            padding: 20px; /* Padding for space inside the container */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            overflow: auto; /* Allow container to scroll if content exceeds */
+            max-height: 90vh; /* Set a maximum height for the container */
+        }
+        h1 {
+            margin-bottom: 20px; /* Space below the heading */
+        }
+        
+        #toc {
+            overflow-y: auto; /* Enable vertical scrolling */
+            padding: 0; 
+            list-style-type: none; 
+            margin: 0; 
+        }
+        li {
+            margin: 10px 0; /* Space between list items */
+            display: flex; /* Use flexbox for layout */
+            justify-content: space-between; /* Space between elements */
+            align-items: center; /* Center align items vertically */
+        }
+        a {
+            text-decoration: none; /* Remove underline from links */
+            color: #007BFF; /* Link color */
+            flex: 1; /* Allow the link to take available space */
+            text-align: left; /* Align link text to the left */
+        }
+        a:visited {
+            color: #6c757d; /* Change color for visited links */
+        }
+        .save-button {
+            padding: 10px 15px; /* Padding for the button */
+            background-color: #007BFF; /* Button background color */
+            color: white; /* Button text color */
+            border: none; /* Remove default border */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+        }
+        .saved {
+            background-color: #28a745; /* Green background for saved state */
+        }
+        #unmark-all {
+            margin-top: 20px; /* Space above the button */
+            padding: 10px 15px; /* Padding for the button */
+            background-color: #dc3545; /* Red background for unmark all */
+            color: white; /* Button text color */
+            border: none; /* Remove default border */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Table of Contents</h1>
+        <button id="unmark-all">Unmark All</button>
+        <ul id="toc">
+            {file_list}
+        </ul>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            // Load saved state from local storage
+            const savedFiles = JSON.parse(localStorage.getItem('{exam_code}savedFiles')) || [];
+
+            savedFiles.forEach(file => {
+                const button = $(`button[data-file="${file}"]`);
+                if (button.length) {
+                    button.text('Marked').addClass('saved')
+                }
+            });
+
+            // Handle button click event
+            $('.save-button').click(function () {
+                const fileId = $(this).data('file');
+
+                if ($(this).hasClass('saved')) {
+                    // If it's already saved, unset the status
+                    $(this).text('Mark for Review').removeClass('saved').css('background-color', '#007BFF');
+                    // Remove from saved files
+                    const index = savedFiles.indexOf(fileId);
+                    if (index > -1) {
+                        savedFiles.splice(index, 1);
+                        localStorage.setItem('{exam_code}savedFiles', JSON.stringify(savedFiles));
+                    }
+                } else {
+                    // Change button text and color to saved
+                    $(this).text('Marked').addClass('saved').css('background-color', '#28a745');
+                    // Add file to saved list
+                    if (!savedFiles.includes(fileId)) {
+                        savedFiles.push(fileId);
+                        localStorage.setItem('{exam_code}savedFiles', JSON.stringify(savedFiles));
+                    }
+                }
+            });
+
+            // Handle "Unmark All" button click
+            $('#unmark-all').click(function () {
+                $('.save-button').each(function () {
+                    $(this).text('Mark for Review').removeClass('saved').css('background-color', '#007BFF')
+                });
+                // Set savedFiles to an empty array and update local storage
+                savedFiles.splice(0, savedFiles.length);
+                localStorage.setItem('{exam_code}savedFiles', JSON.stringify(savedFiles));
+            });
+        });
+    </script>
+</body>
+
+</html>

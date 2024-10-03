@@ -3,6 +3,11 @@
 
 # Except these files and folders
 !README.md
+!soup/
+!soup/bot_soup.py
+!jinja2/
+!jinja2/bot_jinja.py
+!jinja2/template_table_of_contents.html
 !selenium3/
 !selenium3/*
 !selenium3/json/
